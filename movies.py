@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import pickle
-import sklearn
-from sklearn.metrics.pairwise import cosine_similarity 
+#import sklearn
+#from sklearn.metrics.pairwise import cosine_similarity 
 
 st.title("Movie Recommendation")
  
@@ -58,7 +58,7 @@ st.write('Movies you might like')
 sim_movies(name1, int(n1))
 
 n2 = st.text_input('Please enter a User ID')
-if n2 == '':
+if n2 == "":
     n2 = '1'
 n3 = st.text_input('Please enter the number of movies you would like us to suggest')
 if n3 == '':
@@ -80,4 +80,4 @@ def movie_recom(user_id, n):
     recommendations = weighted_averages.merge(movie_titles, left_index=True, right_on="movieId")
     return recommendations.sort_values("predicted_rating", ascending=False).head(n)['title'].to_list()
 
-movie_recom(n2, n3)
+movie_recom(int(n2), int(n3))

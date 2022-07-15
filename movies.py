@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import sklearn
 from sklearn.metrics.pairwise import cosine_similarity 
 
 st.title("Movie Recommendation")

@@ -18,7 +18,7 @@ name_list = movies['title'].tolist()
 m_name = st.selectbox('Please enter the name of a movie', name_list)
 n1 = st.text_input('Please enter the number of top rated movies that you would like to see') 
 
-if n1 = ' ':
+if n1 == ' ':
     n1 = '1'
 
 #def hit_movies(n):

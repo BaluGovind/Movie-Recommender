@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
-
+from sklearn.metrics.pairwise import cosine_similarity 
 
 st.title("Movie Recommendation")
  
@@ -56,3 +56,27 @@ def sim_movies(name, n):
 st.write('Movies you might like')
 sim_movies(name1, int(n1))
 
+n2 = st.text_input('Please enter a User ID')
+if n2 == '':
+    n2 = '1'
+n3 = st.text_input('Please enter the number of movies you would like us to suggest')
+if n3 == '':
+    n3 = '1'
+
+def movie_recom(user_id, n):
+    movie_titles = movies[['movieId', 'title']]
+    users_items = pd.pivot_table(data=ratings, 
+                                 values='rating', 
+                                 index='userId', 
+                                 columns='movieId')
+    users_items.fillna(0, inplace=True)
+    user_similarities = pd.DataFrame(cosine_similarity(users_items),
+                                 columns=users_items.index, 
+                                 index=users_items.index)
+    weights = (user_similarities.query("userId!=@user_id")[user_id] / sum(user_similarities.query("userId!=@user_id")[user_id]))
+    not_visited_restaurants = users_items.loc[users_items.index!=user_id, users_items.loc[user_id,:]==0]
+    weighted_averages = pd.DataFrame(not_visited_restaurants.T.dot(weights), columns=["predicted_rating"])
+    recommendations = weighted_averages.merge(movie_titles, left_index=True, right_on="movieId")
+    return recommendations.sort_values("predicted_rating", ascending=False).head(n)['title'].to_list()
+
+movie_recom(n2, n3)

@@ -78,6 +78,6 @@ def movie_recom(user_id, n):
     not_visited_restaurants = users_items.loc[users_items.index!=user_id, users_items.loc[user_id,:]==0]
     weighted_averages = pd.DataFrame(not_visited_restaurants.T.dot(weights), columns=["predicted_rating"])
     recommendations = weighted_averages.merge(movie_titles, left_index=True, right_on="movieId")
-    return recommendations.sort_values("predicted_rating", ascending=False).head(n)['title'].to_list()
+    st.write(recommendations.sort_values("predicted_rating", ascending=False).head(n)['title'].to_list())
 
 movie_recom(int(n2), int(n3))

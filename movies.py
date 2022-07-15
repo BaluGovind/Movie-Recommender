@@ -11,8 +11,8 @@ This is a protptype where users can see the top rated movies and movies that we 
  
 """)
 
-movies = pd.read_csv('Documents/Bootcamp/Projects/ml-latest-small/Movie-Recommender/movies.csv')
-ratings = pd.read_csv('Documents/Bootcamp/Projects/ml-latest-small/Movie-Recommender/ratings.csv')
+movies = pd.read_csv('movies.csv')
+ratings = pd.read_csv('ratings.csv')
 #tags = pd.read_csv('tags.csv')
 
 name_list = movies['title'].tolist()
